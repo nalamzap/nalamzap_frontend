@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Validation helper
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Helper for input data
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Helper for existing data
+    function existing() {
+      return resource.data;
+    }
+
+    // Know Me cards rules
+    match /know_me_cards/{cardId} {
+      allow read: if true;
+      allow write: if false; // Only manageable from Admin console (no client mutations allowed)
+    }
+
+    // Life events rules
+    match /life_events/{eventId} {
+      allow read: if true;
+      allow write: if false; // Only manageable from Admin console
+    }
+
+    // Resume info rules
+    match /resume_info/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // New unified portfolio document rules
+    match /portfolio/main {
+      allow read: if true;
+      allow write: if request.auth != null; // Authenticated admin can write
+    }
+
+    // Contact messages validation helper
+    function isValidContactMessage(msg) {
+      return msg.name is string && msg.name.size() > 0 && msg.name.size() <= 100
+          && msg.email is string && msg.email.size() > 0 && msg.email.size() <= 200 && msg.email.matches('.+@.+')
+          && msg.message is string && msg.message.size() > 0 && msg.message.size() <= 5000
+          && msg.createdAt == request.time;
+    }
+
+    // Contact form rules
+    match /contact_messages/{messageId} {
+      allow create: if isValidId(messageId) && isValidContactMessage(incoming());
+      allow read, update, delete: if false; // Fully secure, write-only from client (no leak/scraping possible)
+    }
+  }
+}

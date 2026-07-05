@@ -1,0 +1,8 @@
+{
+  "name": "Sk Nazibul Alam Portfolio",
+  "description": "Interactive professional portfolio and CV for Sk Nazibul Alam, Lead Android and AOSP engineer. Showcases bio, milestones trace pathway, skillset, social coordinates, and contact mechanisms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

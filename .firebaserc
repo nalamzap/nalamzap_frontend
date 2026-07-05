@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "nalamzap-dev"
+  },
+  "targets": {
+    "nalamzap-dev": {
+      "hosting": {
+        "portfolio": [
+          "nalamzap-dev"
+        ],
+        "admin": [
+          "nalamzap-admin-nz"
+        ]
+      }
+    }
+  }
+}

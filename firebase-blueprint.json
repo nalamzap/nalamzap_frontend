@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "KnowMeCard": {
+      "title": "Know Me Card",
+      "description": "Card showing hobby, interest or bio on Know Me screen",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "primaryActionLabel": { "type": "string" },
+        "primaryActionUrl": { "type": "string" },
+        "secondaryActionLabel": { "type": "string" },
+        "secondaryActionUrl": { "type": "string" },
+        "order": { "type": "integer" }
+      },
+      "required": ["title", "description", "order"]
+    },
+    "LifeEvent": {
+      "title": "Life Event",
+      "description": "A notable milestone in chronological order for Trace Me",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "order": { "type": "integer" }
+      },
+      "required": ["title", "description", "order"]
+    },
+    "ResumeInfo": {
+      "title": "Resume Info",
+      "description": "Professional background, skills, recommendations and preferences for Hire Me",
+      "type": "object",
+      "properties": {
+        "skillsetSummary": { "type": "string" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["skillsetSummary"]
+    },
+    "ContactMessage": {
+      "title": "Contact Message",
+      "description": "Message from the contact form under Find Me",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "email", "message"]
+    }
+  },
+  "firestore": {
+    "/know_me_cards/{cardId}": {
+      "schema": "KnowMeCard",
+      "description": "Card entries on the /know-me view"
+    },
+    "/life_events/{eventId}": {
+      "schema": "LifeEvent",
+      "description": "Chonological milestones for /trace-me timeline"
+    },
+    "/resume_info/{docId}": {
+      "schema": "ResumeInfo",
+      "description": "Resume profile details"
+    },
+    "/contact_messages/{messageId}": {
+      "schema": "ContactMessage",
+      "description": "Inbound queries from visitors"
+    }
+  }
+}
