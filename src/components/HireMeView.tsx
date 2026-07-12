@@ -3,74 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect, useState } from 'react';
-import { collection, onSnapshot, doc } from 'firebase/firestore';
-import { db, defaultResumeInfo } from '../firebase';
-import { ResumeInfo, Employment, HireMeData } from '../types';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Briefcase, Terminal, Award, HelpCircle, FileDown, CheckCircle, Github, Linkedin, Smartphone, Calendar, MapPin, Clock, ExternalLink, GraduationCap, Quote } from 'lucide-react';
+import { Briefcase, Terminal, Award, FileDown, CheckCircle, Github, Linkedin, Smartphone, Calendar, MapPin, Clock, ExternalLink, GraduationCap, Quote } from 'lucide-react';
+import { hireMeData } from '../data/hireMe';
 
-interface Props {
-  externalData?: HireMeData;
-}
-
-export default function HireMeView({ externalData }: Props) {
-  const [resume, setResume] = useState<ResumeInfo>(defaultResumeInfo);
+export default function HireMeView() {
   const [expandedWorkIdx, setExpandedWorkIdx] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (externalData) {
-      const mapped: ResumeInfo = {
-        skillsetSummary: externalData.overview,
-        lastUpdated: externalData.lastUpdate,
-        skills: externalData.skills,
-        employments: externalData.employments.map(e => ({
-          role: e.role,
-          company: e.companyName,
-          duration: e.dateRange,
-          bullets: e.bulletPoints
-        })),
-        recommendations: externalData.recommendations.map(r => ({
-          name: r.name,
-          relationship: r.position,
-          text: r.text,
-          profileLink: r.linkedinLink
-        })),
-        preferences: {
-          role: externalData.preference.role,
-          location: externalData.preference.location,
-          employmentType: externalData.preference.employmentType,
-          noticePeriod: externalData.preference.noticePeriod
-        },
-        githubUrl: 'https://github.com/nalamzap',
-        linkedinUrl: 'https://www.linkedin.com/in/nalamzap/',
-        playStoreUrl: 'https://play.google.com/store/apps/dev?id=5325993520819344034'
-      };
-      setResume(mapped);
-      return;
-    }
-    setLoading(true);
-    // Listen to live resume documentation
-    const unsubscribe = onSnapshot(
-      doc(db, 'resume_info', 'profile'),
-      (docSnap) => {
-        if (docSnap.exists()) {
-          setResume(docSnap.data() as ResumeInfo);
-        } else {
-          setResume(defaultResumeInfo);
-        }
-        setLoading(false);
-      },
-      (error) => {
-        console.warn('Could not read resume from Firestore. Loading defaults.', error);
-        setResume(defaultResumeInfo);
-        setLoading(false);
-      }
-    );
-
-    return () => unsubscribe();
-  }, []);
 
   const triggerDownload = () => {
     // Elegant trigger print dialog, which lets users save the fully responsive layout as PDF
@@ -94,7 +33,7 @@ export default function HireMeView({ externalData }: Props) {
             Hire Me
           </h2>
           <p className="text-zinc-400 font-light text-xs md:text-sm mt-1">
-            Last updated: {resume.lastUpdated || "18th January 2026"}
+            Last updated: {hireMeData.lastUpdated}
           </p>
         </div>
 
@@ -126,7 +65,7 @@ export default function HireMeView({ externalData }: Props) {
               Skillset
             </h3>
             <p className="text-zinc-300 text-sm md:text-base leading-relaxed font-light mb-6">
-              {resume.skillsetSummary}
+              {hireMeData.skillsetSummary}
             </p>
 
             <ul className="space-y-4 text-xs md:text-sm text-zinc-300 font-light leading-relaxed">
@@ -158,7 +97,7 @@ export default function HireMeView({ externalData }: Props) {
               <span>Employment History</span>
             </h3>
 
-            {resume.employments?.map((job, idx) => {
+            {hireMeData.employments.map((job, idx) => {
               const isExpanded = expandedWorkIdx === idx;
               return (
                 <div
@@ -202,8 +141,8 @@ export default function HireMeView({ externalData }: Props) {
                           <ul className="space-y-2.5 text-zinc-300 text-xs md:text-sm font-light leading-relaxed">
                             {job.bullets.map((bullet, bIdx) => (
                               <li key={bIdx} className="flex gap-2.5 items-start">
-                                <CheckCircle className="h-4 w-4 mt-0.5 text-purple-500/80 shrink-0" />
-                                <span>{bullet}</span>
+                                <CheckCircle className="h-4 w-4 mt-1 text-purple-500/80 shrink-0" />
+                                <span className="whitespace-pre-line">{bullet}</span>
                               </li>
                             ))}
                           </ul>
@@ -224,7 +163,7 @@ export default function HireMeView({ externalData }: Props) {
             </h3>
 
             <div className="flex overflow-x-auto gap-4 pb-4 snap-x custom-scrollbar">
-              {resume.recommendations?.map((rec, recIdx) => (
+              {hireMeData.recommendations.map((rec, recIdx) => (
                 <div
                   key={recIdx}
                   className="min-w-[300px] md:min-w-[400px] bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-5 flex flex-col justify-between shadow-md snap-start"
@@ -262,11 +201,8 @@ export default function HireMeView({ externalData }: Props) {
                   </div>
                 </div>
               ))}
-              {(!resume.recommendations || resume.recommendations.length === 0) && (
-                <div className="text-zinc-500 italic text-sm p-4">No recommendations available.</div>
-              )}
             </div>
-            {resume.recommendations && resume.recommendations.length > 1 && (
+            {hireMeData.recommendations.length > 1 && (
               <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest text-center animate-pulse">
                 Scroll horizontally to view more →
               </p>
@@ -283,17 +219,16 @@ export default function HireMeView({ externalData }: Props) {
             <div className="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-5 shadow-lg relative overflow-hidden">
                <div className="flex flex-col md:flex-row justify-between gap-2">
                  <div>
-                    <h4 className="text-white font-medium text-base">Diploma in Computer Science and Technology</h4>
-                    <p className="text-purple-400 text-xs md:text-sm font-light">Iswar Chandra Vidyasagar Polytechnic</p>
+                    <h4 className="text-white font-medium text-base">{hireMeData.education.degree}</h4>
+                    <p className="text-purple-400 text-xs md:text-sm font-light">{hireMeData.education.field}</p>
                  </div>
                  <div className="text-right">
-                    <p className="text-zinc-300 text-sm">W.B.S.C.T.E</p>
-                    <p className="text-zinc-500 text-xs font-mono">2017 — 2020</p>
+                    <p className="text-zinc-300 text-sm">{hireMeData.education.institution}</p>
+                    <p className="text-zinc-500 text-xs font-mono">{hireMeData.education.duration}</p>
                  </div>
                </div>
             </div>
           </div>
-
         </div>
 
         {/* Right 1 Col: Tech Stack Tags, Social Links, and Job Preferences */}
@@ -306,7 +241,7 @@ export default function HireMeView({ externalData }: Props) {
             </h4>
             <div className="flex items-center gap-4">
               <a
-                href="https://github.com/nalamzap"
+                href={hireMeData.socialLinks.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-zinc-950/40 border border-zinc-800/40 hover:border-zinc-700 text-zinc-300 hover:text-white hover:bg-purple-900/20 transition-all duration-300"
@@ -316,7 +251,7 @@ export default function HireMeView({ externalData }: Props) {
               </a>
 
               <a
-                href="https://www.linkedin.com/in/nalamzap/"
+                href={hireMeData.socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-zinc-950/40 border border-zinc-800/40 hover:border-zinc-700 text-zinc-300 hover:text-white hover:bg-purple-900/20 transition-all duration-300"
@@ -326,7 +261,7 @@ export default function HireMeView({ externalData }: Props) {
               </a>
 
               <a
-                href="https://play.google.com/store/apps/dev?id=5325993520819344034"
+                href={hireMeData.socialLinks.playStore}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-zinc-950/40 border border-zinc-800/40 hover:border-zinc-700 text-zinc-300 hover:text-white hover:bg-purple-900/20 transition-all duration-300"
@@ -344,22 +279,12 @@ export default function HireMeView({ externalData }: Props) {
               <span>Languages</span>
             </h4>
             <div className="space-y-3">
-              <div>
-                <span className="text-[10px] uppercase font-mono text-zinc-500 tracking-wider block">English</span>
-                <p className="text-white text-xs font-medium">Bilingual Proficiency</p>
-              </div>
-              <div>
-                <span className="text-[10px] uppercase font-mono text-zinc-500 tracking-wider block">Bengali</span>
-                <p className="text-white text-xs font-medium">Conversational Native Speaker</p>
-              </div>
-              <div>
-                <span className="text-[10px] uppercase font-mono text-zinc-500 tracking-wider block">Hindi</span>
-                <p className="text-white text-xs font-medium">Conversational Native Speaker</p>
-              </div>
-              <div>
-                <span className="text-[10px] uppercase font-mono text-zinc-500 tracking-wider block">Japanese</span>
-                <p className="text-white text-xs font-medium">Beginner (JLPT N5)</p>
-              </div>
+              {hireMeData.languages.map((lang, i) => (
+                <div key={i}>
+                  <span className="text-[10px] uppercase font-mono text-zinc-500 tracking-wider block">{lang.name}</span>
+                  <p className="text-white text-xs font-medium">{lang.proficiency}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -370,7 +295,7 @@ export default function HireMeView({ externalData }: Props) {
               <span>Technical Skills</span>
             </h4>
             <div className="flex flex-wrap gap-2">
-              {resume.skills?.map((skill, sIdx) => (
+              {hireMeData.skills.map((skill, sIdx) => (
                 <span
                   key={sIdx}
                   className="px-2.5 py-1 text-[11px] font-mono rounded bg-zinc-800/80 text-purple-300 border border-zinc-705/30 uppercase tracking-wide hover:bg-purple-900/20 hover:text-white hover:border-purple-500/20 transition-all duration-200"
@@ -397,7 +322,7 @@ export default function HireMeView({ externalData }: Props) {
                     Role Preference
                   </span>
                   <p className="text-white text-xs md:text-sm font-medium">
-                    {resume.preferences?.role || "Lead Android engineer"}
+                    {hireMeData.preferences.role}
                   </p>
                 </div>
               </div>
@@ -409,7 +334,7 @@ export default function HireMeView({ externalData }: Props) {
                     Preferred Location
                   </span>
                   <p className="text-white text-xs md:text-sm font-medium">
-                    {resume.preferences?.location || "Remote / Bengaluru"}
+                    {hireMeData.preferences.location}
                   </p>
                 </div>
               </div>
@@ -421,7 +346,7 @@ export default function HireMeView({ externalData }: Props) {
                     Employment Type
                   </span>
                   <p className="text-white text-xs md:text-sm font-medium">
-                    {resume.preferences?.employmentType || "Permanent Full-Time"}
+                    {hireMeData.preferences.employmentType}
                   </p>
                 </div>
               </div>
@@ -433,7 +358,7 @@ export default function HireMeView({ externalData }: Props) {
                     Notice Interval
                   </span>
                   <p className="text-white text-xs md:text-sm font-medium">
-                    {resume.preferences?.noticePeriod || "Immediate / 30 Days"}
+                    {hireMeData.preferences.noticePeriod}
                   </p>
                 </div>
               </div>

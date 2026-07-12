@@ -14,11 +14,11 @@ export default function HomeView() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className="flex flex-col justify-between min-h-[500px] text-white p-4 md:p-8"
     >
-      <div className="max-w-xl space-y-6 mt-12 md:mt-20">
-        <h1 className="text-4xl md:text-6xl font-display font-medium tracking-tight">
+      <div className="max-w-xl space-y-6 mt-6 md:mt-10">
+        <h1 className="text-2xl md:text-3xl font-display font-medium tracking-tight">
           Hello!
         </h1>
-        <p className="text-zinc-300 text-lg md:text-xl font-light leading-relaxed">
+        <p className="text-zinc-300 text-base md:text-lg font-light leading-relaxed">
           This is my personal weblog and any views expressed here are mine and mine alone.
           The pictures posted in this site belongs to me unless otherwise stated.
         </p>

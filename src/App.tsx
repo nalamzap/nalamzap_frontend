@@ -10,21 +10,15 @@ import KnowMeView from './components/KnowMeView';
 import TraceMeView from './components/TraceMeView';
 import HireMeView from './components/HireMeView';
 import FindMeView from './components/FindMeView';
-import { testConnection, getPortfolioData } from './firebase';
-import { PortfolioData } from './types';
+import RecommendationsView from './components/RecommendationsView';
+import { testConnection } from './firebase';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
-  const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null);
 
   useEffect(() => {
     // Run safe connectivity handshake on load
     testConnection();
-
-    // Fetch initial portfolio data
-    getPortfolioData().then(data => {
-      if (data) setPortfolioData(data);
-    });
 
     // Listen to tab/browser history state mutations
     const handlePopState = () => {
@@ -43,16 +37,19 @@ export default function App() {
   const renderActiveView = () => {
     // Suffix checks to withstand dynamic hosting offsets (e.g. cloud run paths)
     if (currentPath.endsWith('/know-me')) {
-      return <KnowMeView />;
+      return <KnowMeView navigate={navigate} />;
     }
     if (currentPath.endsWith('/trace-me')) {
-      return <TraceMeView externalData={portfolioData?.traceMe} />;
+      return <TraceMeView />;
     }
     if (currentPath.endsWith('/hire-me')) {
-      return <HireMeView externalData={portfolioData?.hireMe} />;
+      return <HireMeView />;
     }
     if (currentPath.endsWith('/find-me')) {
-      return <FindMeView externalData={portfolioData?.findMe} />;
+      return <FindMeView />;
+    }
+    if (currentPath.endsWith('/recommendations')) {
+      return <RecommendationsView onBack={() => navigate('/know-me')} />;
     }
     return <HomeView />;
   };

@@ -3,12 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect, useState } from 'react';
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
-import { db, defaultKnowMeCards } from '../firebase';
-import { KnowMeCard } from '../types';
-import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquare, Mail, Code, BookOpen, Coffee, MousePointer } from 'lucide-react';
+import { motion } from 'motion/react';
+import { MessageSquare, Code, BookOpen, Coffee, MousePointer, Mail } from 'lucide-react';
+import { knowMeCards } from '../data/knowMe';
 
 // A lightweight custom decorator for simple markdown details (bolds & paragraphs)
 function renderDescription(text: string) {
@@ -43,38 +40,11 @@ const getIconForCard = (title: string) => {
   return <MousePointer className="h-5 w-5 text-purple-400" />;
 };
 
-export default function KnowMeView() {
-  const [cards, setCards] = useState<KnowMeCard[]>(defaultKnowMeCards);
-  const [loading, setLoading] = useState(false);
+interface KnowMeViewProps {
+  navigate: (path: string) => void;
+}
 
-  useEffect(() => {
-    setLoading(true);
-    const q = query(collection(db, 'know_me_cards'), orderBy('order', 'asc'));
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        if (!snapshot.empty) {
-          const list: KnowMeCard[] = [];
-          snapshot.forEach((doc) => {
-            list.push({ id: doc.id, ...doc.data() } as KnowMeCard);
-          });
-          setCards(list);
-        } else {
-          // If Firestore is empty, fall back to seed defaults
-          setCards(defaultKnowMeCards);
-        }
-        setLoading(false);
-      },
-      (error) => {
-        console.warn('Could not load cards from cloud, using offline default.', error);
-        setCards(defaultKnowMeCards);
-        setLoading(false);
-      }
-    );
-
-    return () => unsubscribe();
-  }, []);
-
+export default function KnowMeView({ navigate }: KnowMeViewProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
@@ -92,7 +62,7 @@ export default function KnowMeView() {
       {/* Horizontal horizontal wrapper */}
       <div className="overflow-x-auto overflow-y-hidden py-8 px-6 md:px-12 flex-1 flex items-center custom-scrollbar">
         <div className="flex gap-6 pb-4">
-          {cards.map((card, index) => (
+          {knowMeCards.map((card, index) => (
             <motion.div
               key={card.id || index}
               initial={{ opacity: 0, x: 50 }}
@@ -146,25 +116,43 @@ export default function KnowMeView() {
               {/* Action Buttons */}
               <div className="mt-4 pt-3 border-t border-zinc-800/40 flex flex-wrap gap-2 justify-end">
                 {card.secondaryActionLabel && card.secondaryActionUrl && (
-                  <a
-                    href={card.secondaryActionUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-zinc-400 hover:text-white border border-zinc-800 hover:border-zinc-700 font-medium px-3.5 py-1.5 rounded-lg bg-zinc-950/20 hover:bg-zinc-800/30 transition-all duration-200"
-                  >
-                    {card.secondaryActionLabel}
-                  </a>
+                  card.secondaryActionInternal ? (
+                    <button
+                      onClick={() => navigate(card.secondaryActionUrl!)}
+                      className="text-xs text-zinc-400 hover:text-white border border-zinc-800 hover:border-zinc-700 font-medium px-3.5 py-1.5 rounded-lg bg-zinc-950/20 hover:bg-zinc-800/30 transition-all duration-200 cursor-pointer"
+                    >
+                      {card.secondaryActionLabel}
+                    </button>
+                  ) : (
+                    <a
+                      href={card.secondaryActionUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-zinc-400 hover:text-white border border-zinc-800 hover:border-zinc-700 font-medium px-3.5 py-1.5 rounded-lg bg-zinc-950/20 hover:bg-zinc-800/30 transition-all duration-200"
+                    >
+                      {card.secondaryActionLabel}
+                    </a>
+                  )
                 )}
                 {card.primaryActionLabel && card.primaryActionUrl && (
-                  <a
-                    href={card.primaryActionUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-purple-100 hover:text-white font-semibold px-4 py-1.5 rounded-lg bg-purple-900/60 hover:bg-purple-800/80 border border-purple-700/50 shadow-md transition-all duration-200"
-                  >
-                    <Mail className="h-3 w-3" />
-                    <span>{card.primaryActionLabel}</span>
-                  </a>
+                  card.primaryActionInternal ? (
+                    <button
+                      onClick={() => navigate(card.primaryActionUrl!)}
+                      className="inline-flex items-center gap-1.5 text-xs text-purple-100 hover:text-white font-semibold px-4 py-1.5 rounded-lg bg-purple-900/60 hover:bg-purple-800/80 border border-purple-700/50 shadow-md transition-all duration-200 cursor-pointer"
+                    >
+                      <span>{card.primaryActionLabel}</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={card.primaryActionUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-purple-100 hover:text-white font-semibold px-4 py-1.5 rounded-lg bg-purple-900/60 hover:bg-purple-800/80 border border-purple-700/50 shadow-md transition-all duration-200"
+                    >
+                      <Mail className="h-3 w-3" />
+                      <span>{card.primaryActionLabel}</span>
+                    </a>
+                  )
                 )}
               </div>
             </motion.div>

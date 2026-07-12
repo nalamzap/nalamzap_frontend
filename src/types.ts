@@ -98,8 +98,10 @@ export interface KnowMeCard {
   imageUrl?: string;
   primaryActionLabel?: string;
   primaryActionUrl?: string;
+  primaryActionInternal?: boolean;
   secondaryActionLabel?: string;
   secondaryActionUrl?: string;
+  secondaryActionInternal?: boolean;
   order: number;
 }
 
@@ -110,6 +112,11 @@ export interface LifeEvent {
   description: string;
   imageUrl?: string;
   order: number;
+}
+
+export interface RecommendationCategory {
+  title: string;
+  items: string[];
 }
 
 export interface ResumeInfo {

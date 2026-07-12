@@ -6,14 +6,10 @@
 import { useState, FormEvent } from 'react';
 import { submitContactMessage } from '../firebase';
 import { motion, AnimatePresence } from 'motion/react';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Smartphone, CheckCircle, AlertCircle, Loader2, Link as LinkIcon } from 'lucide-react';
-import { FindMeData } from '../types';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2, Link as LinkIcon } from 'lucide-react';
+import { findMeData } from '../data/findMe';
 
-interface Props {
-  externalData?: FindMeData;
-}
-
-export default function FindMeView({ externalData }: Props) {
+export default function FindMeView() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -86,7 +82,7 @@ export default function FindMeView({ externalData }: Props) {
 
             <div className="space-y-3.5">
               <a
-                href={`mailto:${externalData?.email || 'nalamzap@gmail.com'}`}
+                href={`mailto:${findMeData.email}`}
                 className="flex items-center gap-3 text-zinc-300 hover:text-white group transition-colors duration-200"
               >
                 <div className="p-2 rounded-lg bg-zinc-800/60 border border-zinc-700/50 group-hover:bg-purple-900/30 transition-all duration-300">
@@ -96,7 +92,7 @@ export default function FindMeView({ externalData }: Props) {
                   <span className="text-[10px] uppercase font-mono text-zinc-500 block">
                     Direct Email
                   </span>
-                  <span className="text-sm font-light">{externalData?.email || 'nalamzap@gmail.com'}</span>
+                  <span className="text-sm font-light">{findMeData.email}</span>
                 </div>
               </a>
 
@@ -108,7 +104,7 @@ export default function FindMeView({ externalData }: Props) {
                   <span className="text-[10px] uppercase font-mono text-zinc-500 block">
                     Mobile Number
                   </span>
-                  <span className="text-sm font-light">{externalData?.mobile || '+91 98765 43210'}</span>
+                  <span className="text-sm font-light">{findMeData.mobile}</span>
                 </div>
               </div>
 
@@ -121,29 +117,27 @@ export default function FindMeView({ externalData }: Props) {
                     Currently in
                   </span>
                   <span className="text-sm font-light">
-                    {externalData?.address || 'Kolkata, West Bengal, India'}
+                    {findMeData.location}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Render External Social Links */}
-            {externalData?.socialLinks && externalData.socialLinks.length > 0 && (
-              <div className="pt-4 flex flex-wrap gap-3 border-t border-zinc-800/60">
-                {externalData.socialLinks.map((link, i) => (
-                  <a
-                    key={i}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800/40 border border-zinc-700/40 text-xs font-medium text-purple-300 hover:bg-purple-900/20 hover:text-white transition-all"
-                  >
-                    <LinkIcon size={12} />
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            )}
+            {/* Render Social Links */}
+            <div className="pt-4 flex flex-wrap gap-3 border-t border-zinc-800/60">
+              {findMeData.socialLinks.map((link, i) => (
+                <a
+                  key={i}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800/40 border border-zinc-700/40 text-xs font-medium text-purple-300 hover:bg-purple-900/20 hover:text-white transition-all"
+                >
+                  <LinkIcon size={12} />
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Styled desaturated Map frame with pin */}
@@ -151,13 +145,12 @@ export default function FindMeView({ externalData }: Props) {
             <div className="absolute top-3 left-3 z-20 px-3 py-1 bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[10px] uppercase tracking-widest rounded-lg">
               Station coordinates
             </div>
-            {/* Grayscale filter makes standard OSM map look incredibly slick and cohesive with system design */}
             <iframe
               title="Sk Nazibul Alam Location Map"
               width="100%"
               height="100%"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=88.3000%2C22.5000%2C88.4500%2C22.6500&layer=mapnik&marker=22.5726%2C88.3639"
-              className="w-full h-full border-0 select-none pointer-events-none"
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${findMeData.coordinates.lng-0.05}%2C${findMeData.coordinates.lat-0.05}%2C${findMeData.coordinates.lng+0.05}%2C${findMeData.coordinates.lat+0.05}&layer=mapnik&marker=${findMeData.coordinates.lat}%2C${findMeData.coordinates.lng}`}
+              className="w-full h-full border-0"
               style={{
                 filter: 'grayscale(100%) invert(92%) contrast(150%) brightness(95%) saturate(10%)',
               }}
@@ -202,7 +195,7 @@ export default function FindMeView({ externalData }: Props) {
 
             <div>
               <label className="text-[11px] uppercase font-mono text-zinc-400 tracking-wider block mb-1">
-                Your Message / Enquiry
+                Your Message
               </label>
               <textarea
                 value={message}
@@ -257,7 +250,7 @@ export default function FindMeView({ externalData }: Props) {
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin text-purple-300" />
-                  <span>Submitting request...</span>
+                  <span>Submitting...</span>
                 </>
               ) : (
                 <>

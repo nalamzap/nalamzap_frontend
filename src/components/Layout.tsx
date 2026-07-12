@@ -7,7 +7,7 @@ import { useState, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 // @ts-ignore
-import portraitImg from '../assets/images/nazibul_portrait_1781510889258.jpg';
+import portraitImg from '../assets/images/me.jpg';
 
 interface LayoutProps {
   currentPath: string;
@@ -20,7 +20,7 @@ export default function Layout({ currentPath, navigate, children }: LayoutProps)
 
   // Normalize path checks
   const isHome = currentPath === '/' || currentPath === '';
-  const isKnowMe = currentPath.endsWith('/know-me');
+  const isKnowMe = currentPath.endsWith('/know-me') || currentPath.endsWith('/recommendations');
   const isTraceMe = currentPath.endsWith('/trace-me');
   const isHireMe = currentPath.endsWith('/hire-me');
   const isFindMe = currentPath.endsWith('/find-me');
@@ -42,7 +42,7 @@ export default function Layout({ currentPath, navigate, children }: LayoutProps)
       
       {/* Background Face Portrait Photo (from Image 4 & Image 1) */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center lg:bg-right-bottom bg-no-repeat opacity-35 grayscale blend-luminosity transition-all duration-700 pointer-events-none"
+        className="absolute inset-0 z-0 bg-cover bg-center lg:bg-right-bottom bg-no-repeat opacity-100 transition-all duration-700 pointer-events-none"
         style={{ 
           backgroundImage: `url(${portraitImg})`,
           backgroundSize: 'contain',
@@ -50,22 +50,13 @@ export default function Layout({ currentPath, navigate, children }: LayoutProps)
         }}
       />
       {/* Back glow overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/95 z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/70 z-0 pointer-events-none" />
 
       {/* HEADER / NAVIGATION COLUMN */}
-      <header className="w-full lg:w-72 shrink-0 p-6 lg:p-8 flex lg:flex-col justify-between items-center lg:items-start z-40 bg-black/60 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none border-b lg:border-b-0 border-zinc-900 sticky top-0 lg:h-screen lg:fixed lg:left-0 lg:top-0">
+      <header className="w-full lg:w-72 shrink-0 p-4 lg:p-8 flex lg:flex-col justify-between items-center lg:items-start z-40 bg-black/60 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none border-b lg:border-b-0 border-zinc-900 sticky top-0 lg:h-screen lg:fixed lg:left-0 lg:top-0">
         
         {/* Top brand header */}
-        <div className="space-y-6 w-full">
-          <button
-            onClick={() => handleNavClick('/')}
-            className="text-left group cursor-pointer focus:outline-none"
-          >
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-display font-bold font-medium tracking-tight text-white group-hover:text-purple-400 transition-colors duration-300">
-              Sk Nazibul Alam
-            </h1>
-          </button>
-
+        <div className="flex flex-row items-center gap-3 lg:flex-col lg:items-start lg:space-y-6 w-full">
           {/* Collapsible Hamburger Menu button for mobile */}
           <div className="lg:hidden flex items-center">
             <button
@@ -75,6 +66,15 @@ export default function Layout({ currentPath, navigate, children }: LayoutProps)
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
+
+          <button
+            onClick={() => handleNavClick('/')}
+            className="text-left group cursor-pointer focus:outline-none"
+          >
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-display font-bold font-medium tracking-tight text-white group-hover:text-purple-400 transition-colors duration-300">
+              Sk Nazibul Alam
+            </h1>
+          </button>
 
           {/* Desktop Navigation list */}
           <nav className="hidden lg:block space-y-2 pt-12">
@@ -164,7 +164,7 @@ export default function Layout({ currentPath, navigate, children }: LayoutProps)
       </AnimatePresence>
 
       {/* MAIN CONTENT VIEWPORT */}
-      <main className="flex-1 min-h-[calc(100vh-77px)] lg:min-h-screen z-10 flex flex-col items-center p-4 md:p-8 lg:pl-80 relative select-none overflow-x-hidden">
+      <main className="flex-1 h-[calc(100vh-77px)] lg:h-screen z-10 flex flex-col items-center p-4 md:p-8 lg:pl-80 relative select-none overflow-hidden">
         
         <div className="w-full max-w-5xl flex flex-col flex-1 justify-center">
           {isHome ? (
