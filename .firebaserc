@@ -7,9 +7,6 @@
       "hosting": {
         "portfolio": [
           "nalamzap-dev"
-        ],
-        "admin": [
-          "nalamzap-admin-nz"
         ]
       }
     }

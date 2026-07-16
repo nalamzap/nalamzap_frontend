@@ -11,6 +11,7 @@ import TraceMeView from './components/TraceMeView';
 import HireMeView from './components/HireMeView';
 import FindMeView from './components/FindMeView';
 import RecommendationsView from './components/RecommendationsView';
+import PrintResumeView from './components/PrintResumeView';
 import { testConnection } from './firebase';
 
 export default function App() {
@@ -43,7 +44,7 @@ export default function App() {
       return <TraceMeView />;
     }
     if (currentPath.endsWith('/hire-me')) {
-      return <HireMeView />;
+      return <HireMeView navigate={navigate} />;
     }
     if (currentPath.endsWith('/find-me')) {
       return <FindMeView />;
@@ -51,8 +52,17 @@ export default function App() {
     if (currentPath.endsWith('/recommendations')) {
       return <RecommendationsView onBack={() => navigate('/know-me')} />;
     }
+    if (currentPath.endsWith('/print-resume')) {
+      return <PrintResumeView onBack={() => navigate('/hire-me')} />;
+    }
     return <HomeView />;
   };
+
+  const isPrintView = currentPath.endsWith('/print-resume');
+
+  if (isPrintView) {
+    return renderActiveView();
+  }
 
   return (
     <Layout currentPath={currentPath} navigate={navigate}>

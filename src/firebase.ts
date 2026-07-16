@@ -98,7 +98,7 @@ export const defaultKnowMeCards: KnowMeCard[] = [
     subtitle: "How I think, feel, and process things",
     description: "I spend a lot of time observing people, systems, and my own reactions to them. I'm drawn to questions of fairness, emotional balance, and why things are the way they are.\n\nI don't experience emotions loudly and I tend to analyze feelings before expressing them, trying to understand how they influence decisions.\n\nMy mind loops.. revisiting ideas, questioning assumptions, and refining them. Sometimes this becomes overthinking; other times, it leads to clarity.",
     primaryActionLabel: "Grab a coffee/meal",
-    primaryActionUrl: "mailto:nalamzap@gmail.com?subject=Let's Grab Coffee",
+    primaryActionUrl: "mailto:nazibul@nalamzap.dev?subject=Let's Grab Coffee",
     order: 1
   },
   {
@@ -107,7 +107,7 @@ export const defaultKnowMeCards: KnowMeCard[] = [
     subtitle: "Exploring limits and disciplines",
     description: "**Create** - Programming, Blog & Author, Pencil Sketch\n\n**Media** - Anime & Manga, K-Drama & C-Drama, Music & Movies, Learning Japanese\n\n**Movement** - Karate, Walking, Cycling, Skateboarding & skating\n\nGames, Thinking",
     primaryActionLabel: "Get an Invite",
-    primaryActionUrl: "mailto:nalamzap@gmail.com?subject=Invite to Collaborate",
+    primaryActionUrl: "mailto:nazibul@nalamzap.dev?subject=Invite to Collaborate",
     order: 2
   },
   {

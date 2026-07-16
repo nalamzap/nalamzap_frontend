@@ -20,7 +20,8 @@ export default function Layout({ currentPath, navigate, children }: LayoutProps)
 
   // Normalize path checks
   const isHome = currentPath === '/' || currentPath === '';
-  const isKnowMe = currentPath.endsWith('/know-me') || currentPath.endsWith('/recommendations');
+  const isRecommendations = currentPath.endsWith('/recommendations');
+  const isKnowMe = currentPath.endsWith('/know-me') || isRecommendations;
   const isTraceMe = currentPath.endsWith('/trace-me');
   const isHireMe = currentPath.endsWith('/hire-me');
   const isFindMe = currentPath.endsWith('/find-me');
@@ -185,7 +186,9 @@ export default function Layout({ currentPath, navigate, children }: LayoutProps)
 
               {/* Scrollable Scrim Content Area */}
               <div className={`flex-1 custom-scrollbar ${
-                isKnowMe
+                isRecommendations
+                  ? 'overflow-y-auto overflow-x-hidden'
+                  : isKnowMe
                   ? 'overflow-visible'
                   : isTraceMe
                   ? 'overflow-y-auto overflow-x-hidden pb-[20vh]'

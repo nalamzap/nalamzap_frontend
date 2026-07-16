@@ -18,21 +18,6 @@
           "destination": "/index.html"
         }
       ]
-    },
-    {
-      "target": "admin",
-      "public": "admin_dist",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
     }
   ]
 }

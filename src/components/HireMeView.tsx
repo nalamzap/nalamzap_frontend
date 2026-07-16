@@ -8,13 +8,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Briefcase, Terminal, Award, FileDown, CheckCircle, Github, Linkedin, Smartphone, Calendar, MapPin, Clock, ExternalLink, GraduationCap, Quote } from 'lucide-react';
 import { hireMeData } from '../data/hireMe';
 
-export default function HireMeView() {
-  const [expandedWorkIdx, setExpandedWorkIdx] = useState<number>(0);
+export interface HireMeViewProps {
+  navigate: (path: string) => void;
+}
 
-  const triggerDownload = () => {
-    // Elegant trigger print dialog, which lets users save the fully responsive layout as PDF
-    window.print();
-  };
+export default function HireMeView({ navigate }: HireMeViewProps) {
+  const [expandedWorkIdx, setExpandedWorkIdx] = useState<number>(0);
 
   return (
     <motion.div
@@ -37,13 +36,25 @@ export default function HireMeView() {
           </p>
         </div>
 
-        <button
-          onClick={triggerDownload}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800/80 border border-purple-700/50 hover:border-purple-600/50 shadow-lg text-white font-semibold text-sm transition-all duration-300 self-start md:self-auto cursor-pointer"
-        >
-          <FileDown className="h-4 w-4" />
-          <span>Save Resume as PDF</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-3 self-start md:self-auto print:hidden">
+          <button
+            onClick={() => navigate('/print-resume')}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800/80 border border-purple-700/50 hover:border-purple-600/50 shadow-lg text-white font-semibold text-sm transition-all duration-300 cursor-pointer"
+          >
+            <FileDown className="h-4 w-4" />
+            <span>Save Resume as PDF</span>
+          </button>
+
+          <a
+            href="https://projects.nalamzap.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700/50 hover:border-zinc-600/50 shadow-lg text-white font-semibold text-sm transition-all duration-300 cursor-pointer"
+          >
+            <ExternalLink className="h-4 w-4" />
+            <span>View Projects</span>
+          </a>
+        </div>
       </div>
 
       {/* Main Grid: Left Resume Details | Right Skill bars and preference parameters */}

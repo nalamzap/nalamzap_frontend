@@ -144,6 +144,12 @@ Description:
       profileLink: "https://www.linkedin.com/in/dustinmcafee/"
     },
     {
+      name: "Mayank Jain",
+      relationship: "Technical Lead at MahiTech LLC",
+      text: "I had the chance to work with Nazibul, and it was a great experience. He is very good at solving problems and managing large codebase. He also communicates well with the team. He did a great job updating the old UI code to Jetpack Compose, which made the app smoother and more stable. I would definitely recommend him for Android app development.",
+      profileLink: "https://www.linkedin.com/in/mayankzen/"
+    },
+    {
       name: "Greg Garman",
       relationship: "Android Developer at Elo Touch Solutions",
       text: "I had the pleasure of working with Nazibul on a large AOSP code base. He is an excellent problem solver and well versed in modern android app architecture. I was very impressed by his ability to refactor complex, old code and turn it into modern kotlin/jetpack compose that worked great and was easy to understand. He also has great interpersonal skills and explains concepts very well. I highly recommend Nazibul for any android development role.",
@@ -154,12 +160,6 @@ Description:
       relationship: "IT Analyst at TCS",
       text: "I had the privilege of working with Nazibul, an exceptional Android developer, on several projects. His enthusiasm for learning, technical expertise, and dedication to delivering high-quality work stood out. Nazibul is a team player who communicates eﬀectively and ensures seamless collaboration between frontend and backend. His problem-solving skills, attention to detail, and proactive approach make him a reliable and valuable asset to any team. I highly recommend him for any role.",
       profileLink: "https://www.linkedin.com/in/shiny-majumder-karmakar-4683b5113/"
-    },
-    {
-      name: "Mayank Jain",
-      relationship: "Technical Lead at MahiTech LLC",
-      text: "I had the chance to work with Nazibul, and it was a great experience. He is very good at solving problems and managing large codebase. He also communicates well with the team. He did a great job updating the old UI code to Jetpack Compose, which made the app smoother and more stable. I would definitely recommend him for Android app development.",
-      profileLink: "https://www.linkedin.com/in/mayankzen/"
     },
     {
       name: "Prasad Parulkar",

@@ -114,9 +114,15 @@ export interface LifeEvent {
   order: number;
 }
 
+export interface RecommendationItem {
+  name: string;
+  imageUrl?: string;
+  redirectUrl?: string;
+}
+
 export interface RecommendationCategory {
   title: string;
-  items: string[];
+  items: RecommendationItem[];
 }
 
 export interface ResumeInfo {
