@@ -13,7 +13,6 @@ export const lifeMoments: LifeMoment[] = [
         title: "First property!",
         description: "Purchased my first property in Coimbatore.",
         date: "31th of March, 2026",
-        imageUrl: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=400&auto=format&fit=crop",
         order: 28000
         },
     {
@@ -22,6 +21,13 @@ export const lifeMoments: LifeMoment[] = [
         description: "At around 5:30 in the morning, I get off at Nava India bus stop in Coimbatore. Now, to find a nearby stay at a Zolo PG...",
         date: "6th of July, 2025",
         order: 30000
+        },
+    {
+        id: "naimur",
+        title: "Sis becomes a mum",
+        description: "And I'm a maternal uncle now!!",
+        date: "23rd of August, 2024",
+        order: 32000
         },
     {
         id: "webvio_walk",
@@ -36,6 +42,13 @@ export const lifeMoments: LifeMoment[] = [
         description: "I moved to Kolkata for my first Job!",
         date: "November, 2020",
         order: 38000
+        },
+    {
+        id: "samurai_cup",
+        title: "3rd Place - 2nd Samurai Cup!!",
+        description: "It was a winter camp + Samurai Cup hosted at Midnapore. We had several guests from Japan, Australia and Sri Lanka. It was fun and whelming!!",
+        date: "January, 2019",
+        order: 40000
         },
     {
         id: "icse",

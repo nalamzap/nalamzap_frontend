@@ -46,8 +46,8 @@ export interface ResumeData {
 }
 
 export const hireMeData: ResumeData = {
-  skillsetSummary: "With a 5 years of industry experience in Android Development, including a year with the Android Open Source Project (AOSP), Nazibul brings extensive expertise in both Android app development and Android OS framework as a 1st Party(1P) Android Developer. His journey in programming began in the 4th grade, fueling a lifelong passion for technology. Although he specializes in Android technologies, Nazibul is keen on exploring a diverse range of technologies and excels at quickly acquiring new skills as needed. He has often acquired new skills trying to teach a friend or junior from school. He has conducted 50+ technical interviews to evaluate and shortlist candidates for android engineering roles.",
-  lastUpdated: "30th June 2026",
+  skillsetSummary: "With over 4 years of industry experience in Android Development, including two years with the Android Open Source Project (AOSP), Nazibul brings extensive expertise in both Android app development and Android OS framework as a 1st Party(1P) Android Developer. His journey in programming began in the 4th grade, fueling a lifelong passion for technology. Although he specializes in Android technologies, Nazibul is keen on exploring a diverse range of technologies and excels at quickly acquiring new skills as needed. He has often acquired new skills trying to teach a friend or junior from school. He has conducted 50+ technical interviews to evaluate and shortlist candidates for android engineering roles.",
+  lastUpdated: "20th June 2026",
   skills: [
     "Kotlin", "Java", "AOSP (Android Open Source Project)", "AIDL & IPC Hubs",
     "Jetpack Compose", "Android SDK & NDK",
@@ -121,18 +121,10 @@ Description:
     },
     {
       role: "Android Developer",
-      company: "Dotcom Softwares",
-      duration: "Mar 2021 - Sep 2022",
+      company: "Freelance",
+      duration: "Jun 2020 - Sep 2022",
       bullets: [
           "Worked on various local client projects - Shopping, Employee management, Gamified educational app"
-          ]
-    },
-    {
-      role: "Android Developer",
-      company: "Webvio technologies",
-      duration: "Nov 2020 - Feb 2021",
-      bullets: [
-          "Under NDA - In-House Application"
           ]
     }
   ],
