@@ -46,7 +46,7 @@ export interface ResumeData {
 }
 
 export const hireMeData: ResumeData = {
-  skillsetSummary: "With over 4 years of industry experience in Android Development, including two years with the Android Open Source Project (AOSP), Nazibul brings extensive expertise in both Android app development and Android OS framework as a 1st Party(1P) Android Developer. His journey in programming began in the 4th grade, fueling a lifelong passion for technology. Although he specializes in Android technologies, Nazibul is keen on exploring a diverse range of technologies and excels at quickly acquiring new skills as needed. He has often acquired new skills trying to teach a friend or junior from school. He has conducted 50+ technical interviews to evaluate and shortlist candidates for android engineering roles.",
+  skillsetSummary: "With over 5 years of industry experience in Android Development, including two years with the Android Open Source Project (AOSP), Nazibul brings extensive expertise in both Android app development and Android OS framework as a 1st Party(1P) Android Developer. His journey in programming began in the 4th grade, fueling a lifelong passion for technology. Although he specializes in Android technologies, Nazibul is keen on exploring a diverse range of technologies and excels at quickly acquiring new skills as needed. He has often acquired new skills trying to teach a friend or junior from school. He has conducted 50+ technical interviews to evaluate and shortlist candidates for android engineering roles.",
   lastUpdated: "20th June 2026",
   skills: [
     "Kotlin", "Java", "AOSP (Android Open Source Project)", "AIDL & IPC Hubs",
@@ -121,8 +121,8 @@ Description:
     },
     {
       role: "Android Developer",
-      company: "Freelance",
-      duration: "Jun 2020 - Sep 2022",
+      company: "Dotcom Softwares",
+      duration: "Nov 2020 - Sep 2022",
       bullets: [
           "Worked on various local client projects - Shopping, Employee management, Gamified educational app"
           ]
